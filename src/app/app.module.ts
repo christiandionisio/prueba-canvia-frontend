@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoMaterialModule } from './material.module';
 import { AppRoutingModule } from './app.routing';
 import { PagesModule } from './pages/pages.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { PagesModule } from './pages/pages.module';
     BrowserAnimationsModule,
     DemoMaterialModule,
     AppRoutingModule,
-    PagesModule
+    PagesModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
