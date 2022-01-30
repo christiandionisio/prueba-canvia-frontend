@@ -16,6 +16,10 @@ export class ClientesService {
     return this.http.get(`${BASE_URL}/clientes/pageable?page=${page}&size=${size}`);
   }
 
+  getClientes() {
+    return this.http.get(`${BASE_URL}/clientes`);
+  }
+
   registrarCliente(cliente: Cliente) {
     return this.http.post(`${BASE_URL}/clientes`, cliente, {observe: "response"});
   }
@@ -24,7 +28,7 @@ export class ClientesService {
     return this.http.put(`${BASE_URL}/clientes`, cliente, {observe: "response"});
   }
 
-  eliminarCliente(idCliente: String) {
+  eliminarCliente(idCliente: number) {
     return this.http.delete(`${BASE_URL}/clientes/${idCliente}`, {observe: "response"});
   }
 }

@@ -32,5 +32,16 @@
 </div>
 <div mat-dialog-actions>
     <button mat-button (click)="onNoClick()">Cancelar</button>
-    <button mat-raised-button color="accent" (click)="registrarCliente()" [disabled]="!registerForm.valid">Registrar</button>
+    <button mat-raised-button color="accent" 
+            (click)="registrarCliente()" 
+            [disabled]="!registerForm.valid"
+            *ngIf="data.operacion === 'Registro'">
+        Registrar
+    </button>
+    <button mat-raised-button color="accent" 
+            (click)="editarCliente()" 
+            [disabled]="!registerForm.valid"
+            *ngIf="data.operacion === 'Editar'">
+        Editar
+    </button>
 </div>

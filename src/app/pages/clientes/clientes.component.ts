@@ -23,8 +23,12 @@ export class ClientesComponent implements OnInit {
             public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.clienteService.getClientesPageable(0, 5).subscribe((response: any) => {
-      this.ELEMENT_DATA = response.content;
+    this.mostrarClientes();
+  }
+
+  mostrarClientes() {
+    this.clienteService.getClientes().subscribe((response: any) => {
+      this.ELEMENT_DATA = response;
       this.dataSource = new MatTableDataSource<Cliente>(this.ELEMENT_DATA);
     });
   }
@@ -35,18 +39,26 @@ export class ClientesComponent implements OnInit {
       data: { operacion: 'Registro'},
     });
 
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log('The dialog was closed');
-    //   this.animal = result;
-    // });
+    dialogRef.afterClosed().subscribe(result => {
+      this.mostrarClientes();
+    });
   }
 
   editarCliete(element: Cliente) {
-    console.log(element);
+    const dialogRef = this.dialog.open(ClienteDialogComponent, {
+      width: '400px',
+      data: { operacion: 'Editar', cliente: element},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.mostrarClientes();
+    });
   }
 
   eliminarCliente(element: Cliente) {
-    console.log(element);
+    this.clienteService.eliminarCliente(element.idCliente!).subscribe(response => {
+      this.mostrarClientes();
+    });
   }
 
 }

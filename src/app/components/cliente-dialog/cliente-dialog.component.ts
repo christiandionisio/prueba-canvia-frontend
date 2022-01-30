@@ -24,6 +24,16 @@ export class ClienteDialogComponent implements OnInit {
     private clienteService: ClientesService) { }
 
   ngOnInit(): void {
+    this.llenarDatos();
+  }
+
+  llenarDatos() {
+    if (this.data.operacion == 'Editar') {
+      this.registerForm.controls['nombres'].setValue(this.data.cliente.nombres);
+      this.registerForm.controls['apellidos'].setValue(this.data.cliente.apellidos);
+      this.registerForm.controls['dni'].setValue(this.data.cliente.dni);
+      this.registerForm.controls['correo'].setValue(this.data.cliente.correo);
+    }
   }
 
   onNoClick(): void {
@@ -31,10 +41,8 @@ export class ClienteDialogComponent implements OnInit {
   }
 
   registrarCliente() {
-    console.log(this.registerForm.value);
 
     const cliente: Cliente = {
-      "idCliente": '',
       "nombres": this.registerForm.value.nombres,
       'apellidos': this.registerForm.value.apellidos,
       'dni': this.registerForm.value.dni,
@@ -42,7 +50,6 @@ export class ClienteDialogComponent implements OnInit {
     }
 
     this.clienteService.registrarCliente(cliente).subscribe((response: any ) => {
-      console.log(response);
       this.limpiarFormulario();
       this.onNoClick();
     });
@@ -57,6 +64,22 @@ export class ClienteDialogComponent implements OnInit {
 
     this.registerForm.markAsPristine();
     this.registerForm.markAsUntouched();
+  }
+
+  editarCliente() {
+    console.log(this.data.cliente.idCliente);
+    const cliente: Cliente = {
+      "idCliente": this.data.cliente.idCliente,
+      "nombres": this.registerForm.value.nombres,
+      'apellidos': this.registerForm.value.apellidos,
+      'dni': this.registerForm.value.dni,
+      'correo': this.registerForm.value.correo,
+    }
+
+    this.clienteService.updateCliente(cliente).subscribe((response: any ) => {
+      this.limpiarFormulario();
+      this.onNoClick();
+    });
   }
 
 }
