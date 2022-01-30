@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { PagesRoutingModule } from './pages.routing';
 import { FormsModule } from '@angular/forms';
 import { ComponentsModule } from '../components/components.module';
+import { ItemsComponent } from './items/items.component';
 
 
 
@@ -14,7 +15,8 @@ import { ComponentsModule } from '../components/components.module';
 @NgModule({
   declarations: [
     ClientesComponent,
-    NoPageFoundComponent
+    NoPageFoundComponent,
+    ItemsComponent
   ],
   imports: [
     CommonModule,

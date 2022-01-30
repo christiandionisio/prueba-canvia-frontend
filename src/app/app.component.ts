@@ -14,17 +14,17 @@ export class AppComponent {
         {
           displayName: 'Clientes',
           iconName: 'group',
-          route: 'clientes',
+          route: '/dashboard/clientes',
         },        
         {
           displayName: 'Items Detalle',
           iconName: 'category',
-          route: 'items',
+          route: '/dashboard/items',
         },
         {
           displayName: 'Facturas',
           iconName: 'shopping_cart',          
-          route: 'facturas'
+          route: '/dashboard/facturas'
         },
       ];
   mobileQuery: MediaQueryList;

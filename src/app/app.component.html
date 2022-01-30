@@ -36,7 +36,7 @@
             </mat-accordion>
           </span>
           <span *ngIf="!item.children || item.children.length === 0">
-            <mat-list-item routerLink="[item.route]">
+            <mat-list-item [routerLink]="item.route">
               <!-- Entradas principales -->
               <div fxLayout="row" fxLayoutAlign="space-between center">
                 <mat-icon>{{item.iconName}}</mat-icon>
