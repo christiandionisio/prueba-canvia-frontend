@@ -1,0 +1,41 @@
+<h1 mat-dialog-title>{{data.operacion}} Item</h1>
+<div mat-dialog-content>
+
+    <form role="form" [formGroup]="registerForm">
+        <p>
+            <mat-form-field appearance="outline">
+                <mat-label>Nombre</mat-label>
+                <input matInput placeholder="Escriba nombre" formControlName="nombre">
+                <!-- <mat-hint>Hint</mat-hint> -->
+            </mat-form-field>
+        </p>
+        <p>
+            <mat-form-field appearance="outline">
+                <mat-label>Tipo</mat-label>
+                <input matInput placeholder="Escriba tipo de item" formControlName="tipo">
+            </mat-form-field>
+        </p>
+        <p>
+            <mat-form-field appearance="outline">
+                <mat-label>DNI</mat-label>
+                <input matInput placeholder="Escriba precio" formControlName="precio">
+            </mat-form-field>
+        </p>
+    </form>
+
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancelar</button>
+    <button mat-raised-button color="accent" 
+            (click)="registrarItem()" 
+            [disabled]="!registerForm.valid"
+            *ngIf="data.operacion === 'Registro'">
+        Registrar
+    </button>
+    <button mat-raised-button color="accent" 
+            (click)="editarItem()" 
+            [disabled]="!registerForm.valid"
+            *ngIf="data.operacion === 'Editar'">
+        Editar
+    </button>
+</div>
