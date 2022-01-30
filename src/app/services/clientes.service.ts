@@ -20,6 +20,10 @@ export class ClientesService {
     return this.http.get(`${BASE_URL}/clientes`);
   }
 
+  getFiltroClientesPorDni(dni: String) {
+    return this.http.get(`${BASE_URL}/clientes/buscarPorDni/${dni}`);
+  }
+
   registrarCliente(cliente: Cliente) {
     return this.http.post(`${BASE_URL}/clientes`, cliente, {observe: "response"});
   }

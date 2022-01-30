@@ -24,6 +24,14 @@ export class ItemsService {
     return this.http.post(`${BASE_URL}/items-detalles`, item, {observe: "response"});
   }
 
+  getFiltroItemsPorNombre(nombre: String) {
+    return this.http.get(`${BASE_URL}/items-detalles/buscarPorNombre/${nombre}`);
+  }
+
+  getItemPorId(id: number) {
+    return this.http.get(`${BASE_URL}/items-detalles/${id}`);
+  }
+
   updateItem(item: Items) {
     return this.http.put(`${BASE_URL}/items-detalles`, item, {observe: "response"});
   }

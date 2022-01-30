@@ -8,6 +8,7 @@ import { PagesRoutingModule } from './pages.routing';
 import { FormsModule } from '@angular/forms';
 import { ComponentsModule } from '../components/components.module';
 import { ItemsComponent } from './items/items.component';
+import { FacturaComponent } from './factura/factura.component';
 
 
 
@@ -16,7 +17,8 @@ import { ItemsComponent } from './items/items.component';
   declarations: [
     ClientesComponent,
     NoPageFoundComponent,
-    ItemsComponent
+    ItemsComponent,
+    FacturaComponent
   ],
   imports: [
     CommonModule,

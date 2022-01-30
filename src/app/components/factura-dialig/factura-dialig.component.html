@@ -1,0 +1,95 @@
+<h1 mat-dialog-title>{{data.operacion}} Factura</h1>
+<div mat-dialog-content>
+
+    <form role="form" [formGroup]="facturaClienteForm">
+        <mat-form-field appearance="outline">
+            <mat-label>Estado</mat-label>
+            <input matInput placeholder="Estado de la factura" formControlName="estado">
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Cliente</mat-label>
+            <input type="text"
+                placeholder="Elegir uno"
+                aria-label="Cliente"
+                matInput
+                [formControl]="controlCliente"
+                [matAutocomplete]="autoCliente">
+            <mat-autocomplete #autoCliente="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option.idCliente">
+                {{option.dni}} - {{option.nombres}} {{option.apellidos}}
+            </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+        <h3>Detalle Factura</h3>
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Item</mat-label>
+            <input type="text"
+                placeholder="Elegir uno"
+                aria-label="Item"
+                matInput
+                [formControl]="controlItem"
+                [matAutocomplete]="autoItem">
+            <mat-autocomplete #autoItem="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptionsItems | async" [value]="option.idItem">
+                {{option.nombre}} - {{option.tipo}}
+            </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Cantidad</mat-label>
+            <input matInput placeholder="Cantidad de items" formControlName="cantidad">
+        </mat-form-field>
+        &nbsp;
+        <button mat-mini-fab color="primary" (click)="agregarFacturaDetalle()">
+            <mat-icon>add</mat-icon>
+          </button>
+    </form>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+            <td mat-cell *matCellDef="let element"> {{element.itemDetalle.nombre}} </td>
+        </ng-container>
+    
+        <!-- Weight Column -->
+        <ng-container matColumnDef="cantidad">
+            <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+            <td mat-cell *matCellDef="let element"> {{element.cantidad}} </td>
+        </ng-container>
+    
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="precio">
+            <th mat-header-cell *matHeaderCellDef> Precio </th>
+            <td mat-cell *matCellDef="let element"> {{element.itemDetalle.precio * element.cantidad}} </td>
+        </ng-container>
+    
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="operaciones">
+            <th mat-header-cell *matHeaderCellDef> Operaciones </th>
+            <td mat-cell *matCellDef="let element; let i = index">
+                  <button mat-mini-fab color="warn" (click)="eliminarDetalle(i)">
+                    <mat-icon>remove</mat-icon>
+                  </button>
+            </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+        </tr>
+    </table>
+    <br>
+    <h3>Total : ${{precioTotal.toFixed(2)}}</h3>
+
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancelar</button>
+    <button mat-raised-button color="accent" 
+            (click)="registrarFactura()"
+            [disabled]="!facturaClienteForm.valid"
+            *ngIf="data.operacion === 'Registro'">
+        Registrar
+    </button>
+</div>

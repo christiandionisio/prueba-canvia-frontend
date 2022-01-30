@@ -4,13 +4,15 @@ import { ClienteDialogComponent } from './cliente-dialog/cliente-dialog.componen
 import { DemoMaterialModule } from '../material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ItemDialogComponent } from './item-dialog/item-dialog.component';
+import { FacturaDialigComponent } from './factura-dialig/factura-dialig.component';
 
 
 
 @NgModule({
   declarations: [
     ClienteDialogComponent,
-    ItemDialogComponent
+    ItemDialogComponent,
+    FacturaDialigComponent
   ],
   imports: [
     CommonModule,
