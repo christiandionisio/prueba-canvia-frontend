@@ -1,6 +1,8 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
+import { ClienteDialogComponent } from 'src/app/components/cliente-dialog/cliente-dialog.component';
 import { Cliente } from 'src/app/interfaces/cliente.interface';
 import { ClientesService } from 'src/app/services/clientes.service';
 
@@ -17,13 +19,26 @@ export class ClientesComponent implements OnInit {
   dataSource = new MatTableDataSource<Cliente>(this.ELEMENT_DATA);
   selection = new SelectionModel<Cliente>(true, []);
 
-  constructor(private clienteService: ClientesService) { }
+  constructor(private clienteService: ClientesService,
+            public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.clienteService.getClientesPageable(0, 5).subscribe((response: any) => {
       this.ELEMENT_DATA = response.content;
       this.dataSource = new MatTableDataSource<Cliente>(this.ELEMENT_DATA);
     });
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ClienteDialogComponent, {
+      width: '400px',
+      data: { operacion: 'Registro'},
+    });
+
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log('The dialog was closed');
+    //   this.animal = result;
+    // });
   }
 
   editarCliete(element: Cliente) {

@@ -1,6 +1,9 @@
 
 <h1>Clientes</h1>
 
+<button mat-raised-button color="accent" (click)="openDialog()">Registrar Cliente</button>
+<br><br>
+
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
     <!-- Name Column -->
@@ -31,11 +34,11 @@
     <ng-container matColumnDef="operaciones">
         <th mat-header-cell *matHeaderCellDef> Operaciones </th>
         <td mat-cell *matCellDef="let element">
-            <button mat-mini-fab color="warning" (click)="editarCliete(element)">
+            <button mat-mini-fab color="basic" (click)="editarCliete(element)">
                 <mat-icon>edit</mat-icon>
               </button>
               &nbsp;&nbsp;
-              <button mat-mini-fab color="primary" (click)="eliminarCliente(element)">
+              <button mat-mini-fab color="warn" (click)="eliminarCliente(element)">
                 <mat-icon>remove</mat-icon>
               </button>
         </td>

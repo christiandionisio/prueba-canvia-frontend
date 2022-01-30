@@ -15,6 +15,9 @@ import {MatExpansionModule} from '@angular/material/expansion'
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatTableModule} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 
 @NgModule({
   exports: [
@@ -25,7 +28,10 @@ import {MatButtonModule} from '@angular/material/button';
     MatExpansionModule,
     MatCheckboxModule,
     MatTableModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule
   ]
 })
 export class DemoMaterialModule {}
