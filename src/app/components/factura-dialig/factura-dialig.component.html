@@ -9,7 +9,7 @@
         <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Cliente</mat-label>
             <input type="text"
-                placeholder="Elegir uno"
+                placeholder="Buscar por DNI"
                 aria-label="Cliente"
                 matInput
                 [formControl]="controlCliente"
@@ -21,29 +21,31 @@
             </mat-autocomplete>
         </mat-form-field>
 
-        <h3>Detalle Factura</h3>
-        <mat-form-field class="example-full-width" appearance="outline">
-            <mat-label>Item</mat-label>
-            <input type="text"
-                placeholder="Elegir uno"
-                aria-label="Item"
-                matInput
-                [formControl]="controlItem"
-                [matAutocomplete]="autoItem">
-            <mat-autocomplete #autoItem="matAutocomplete">
-            <mat-option *ngFor="let option of filteredOptionsItems | async" [value]="option.idItem">
-                {{option.nombre}} - {{option.tipo}}
-            </mat-option>
-            </mat-autocomplete>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label>Cantidad</mat-label>
-            <input matInput placeholder="Cantidad de items" formControlName="cantidad">
-        </mat-form-field>
-        &nbsp;
-        <button mat-mini-fab color="primary" (click)="agregarFacturaDetalle()">
-            <mat-icon>add</mat-icon>
-          </button>
+        <div *ngIf="data.operacion != 'Ver'">
+            <h3>Detalle Factura</h3>
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Item</mat-label>
+                <input type="text"
+                    placeholder="Buscar por nombre"
+                    aria-label="Item"
+                    matInput
+                    [formControl]="controlItem"
+                    [matAutocomplete]="autoItem">
+                <mat-autocomplete #autoItem="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptionsItems | async" [value]="option.idItem">
+                    {{option.nombre}} - {{option.tipo}}
+                </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Cantidad</mat-label>
+                <input matInput placeholder="Cantidad de items" formControlName="cantidad">
+            </mat-form-field>
+            &nbsp;
+            <button mat-mini-fab color="primary" (click)="agregarFacturaDetalle()">
+                <mat-icon>add</mat-icon>
+              </button>
+        </div>
     </form>
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -70,7 +72,7 @@
         <ng-container matColumnDef="operaciones">
             <th mat-header-cell *matHeaderCellDef> Operaciones </th>
             <td mat-cell *matCellDef="let element; let i = index">
-                  <button mat-mini-fab color="warn" (click)="eliminarDetalle(i)">
+                  <button mat-mini-fab color="warn" (click)="eliminarDetalle(i)" *ngIf="data.operacion != 'Ver'">
                     <mat-icon>remove</mat-icon>
                   </button>
             </td>

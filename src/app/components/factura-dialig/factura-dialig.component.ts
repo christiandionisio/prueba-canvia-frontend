@@ -45,7 +45,9 @@ export class FacturaDialigComponent implements OnInit {
     private fb: FormBuilder,
     private facturaService: FacturasService,
     private clienteService: ClientesService,
-    private itemsService: ItemsService) { }
+    private itemsService: ItemsService) { 
+      console.log(data);
+    }
 
   ngOnInit(): void {
     this.filteredOptions = this.controlCliente.valueChanges.pipe(
@@ -57,6 +59,10 @@ export class FacturaDialigComponent implements OnInit {
       startWith(''),
       map(value => this._filterItems(value)),
     );
+
+    if (this.data.factura != null) {
+      this.setFactura(this.data.factura);
+    }
   }
 
   private _filterClientes(value: string): Cliente[] {
@@ -93,6 +99,20 @@ export class FacturaDialigComponent implements OnInit {
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  setFactura(factura: Factura) {
+    this.facturaService.getFacturaConsolidadoPorId(factura.idFactura!).subscribe((response: any) => {
+      console.log(response);
+      this.facturaClienteForm.controls['estado'].setValue(factura.estado);
+      this.controlCliente.setValue(response.clienteFactura.cliente.idCliente);
+
+      response.facturaDetalleList.forEach((element: FacturaDetalle) => {
+        this.facturaDetalle.push(element);
+        this.dataSource = new MatTableDataSource<FacturaDetalle>(this.facturaDetalle);
+        this.precioTotal += element.itemDetalle.precio * element.cantidad;
+      });
+    });
   }
 
   agregarFacturaDetalle() {
@@ -143,7 +163,6 @@ export class FacturaDialigComponent implements OnInit {
   }
 
   eliminarDetalle(index: any) {
-    
     this.precioTotal -= this.facturaDetalle[index].itemDetalle.precio * this.facturaDetalle[index].cantidad; 
     this.facturaDetalle.splice(index, 1); 
     this.dataSource = new MatTableDataSource<FacturaDetalle>(this.facturaDetalle);

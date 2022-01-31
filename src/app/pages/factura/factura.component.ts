@@ -27,7 +27,7 @@ export class FacturaComponent implements OnInit {
   }
 
   mostrarFacturas(): void {
-    this.facturasService.getItems().subscribe((response: any) => {
+    this.facturasService.getFacturas().subscribe((response: any) => {
       this.ELEMENT_DATA = response;
       this.dataSource = new MatTableDataSource<Factura>(this.ELEMENT_DATA);
     });
@@ -47,7 +47,7 @@ export class FacturaComponent implements OnInit {
   verFactura(element: Factura) {
     const dialogRef = this.dialog.open(FacturaDialigComponent, {
       width: '700px',
-      data: { operacion: 'Ver', facturaConsolidado: element},
+      data: { operacion: 'Ver', factura: element},
     });
 
     dialogRef.afterClosed().subscribe(result => {

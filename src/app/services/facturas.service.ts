@@ -12,12 +12,12 @@ export class FacturasService {
 
   constructor(private http: HttpClient) { }
 
-  getItemsPageable(page: number, size: number) {
-    return this.http.get(`${BASE_URL}/facturas/pageable?page=${page}&size=${size}`);
+  getFacturas() {
+    return this.http.get(`${BASE_URL}/facturas`);
   }
 
-  getItems() {
-    return this.http.get(`${BASE_URL}/facturas`);
+  getFacturaConsolidadoPorId(id: number) {
+    return this.http.get(`${BASE_URL}/facturas/${id}`);
   }
 
   registrarFacturaConsolidado(facturaConsolidado: FacturaConsolidado) {
