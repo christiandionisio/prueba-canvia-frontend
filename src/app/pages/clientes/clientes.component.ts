@@ -1,6 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ClienteDialogComponent } from 'src/app/components/cliente-dialog/cliente-dialog.component';
 import { Cliente } from 'src/app/interfaces/cliente.interface';
@@ -11,13 +12,22 @@ import { ClientesService } from 'src/app/services/clientes.service';
   templateUrl: './clientes.component.html',
   styleUrls: ['./clientes.component.css']
 })
-export class ClientesComponent implements OnInit {
+export class ClientesComponent implements OnInit, AfterViewInit {
 
   ELEMENT_DATA: Cliente[] = [];
 
   displayedColumns: string[] = [ 'nombres', 'apellidos', 'dni', 'correo', 'operaciones'];
   dataSource = new MatTableDataSource<Cliente>(this.ELEMENT_DATA);
   selection = new SelectionModel<Cliente>(true, []);
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  public pageSize = 5;
+  public currentPage = 0;
+  public totalSize = 0;
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
 
   constructor(private clienteService: ClientesService,
             public dialog: MatDialog) { }
@@ -26,9 +36,16 @@ export class ClientesComponent implements OnInit {
     this.mostrarClientes();
   }
 
+  public handlePage(e: any) {
+    this.currentPage = e.pageIndex;
+    this.pageSize = e.pageSize;
+    this.mostrarClientes();
+  }
+
   mostrarClientes() {
-    this.clienteService.getClientes().subscribe((response: any) => {
-      this.ELEMENT_DATA = response;
+    this.clienteService.getClientesPageable(this.currentPage, this.pageSize).subscribe((response: any) => {
+      this.totalSize = response.totalElements;
+      this.ELEMENT_DATA = response.content;
       this.dataSource = new MatTableDataSource<Cliente>(this.ELEMENT_DATA);
     });
   }
